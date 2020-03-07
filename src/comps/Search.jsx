@@ -17,7 +17,7 @@ export default function Search({ handleResults, handleLoading }) {
     handleLoading(true)
     try {
       const results = await search_memoize(query)
-      const filteredResults = results.filter(r => !r.hours && (!r.minutes || r.minutes < 10))
+      const filteredResults = results.filter(r => !r.hours && r.minutes < 10)
       handleResults(filteredResults)
     } catch(error) {
       console.error(error)
