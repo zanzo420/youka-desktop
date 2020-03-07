@@ -1,0 +1,32 @@
+*:focus {
+  outline:0 !important;
+}
+
+a:hover {
+  color: white;
+}
+
+.captions-curr-line, .captions-curr-word {
+  color: #2185d0;
+  font-weight: bold;
+}
+
+.captions-next-line, .captions-after-word, .captions-before-word {
+  color: #ccc;
+  font-weight: bold;
+}
+
+.ui.form {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+.ui.form .field {
+  margin: 0;
+}
+
+.bg-primary {
+  background-color: #E30B17;
+}
