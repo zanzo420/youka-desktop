@@ -1,10 +1,13 @@
-# Youka
-
-Karaoke for any song in any language.
+<p align="center"><img src="assets/logo.ico" width='80px'/></p>
+<h2 align="center"><b>Youka</b></h2>
+<h4 align="center">Karaoke for any song in any language</h4>
 
 - Read about Youka on [The Verge](https://www.theverge.com/tldr/2020/2/19/21144452/youtube-youka-club-karaoke-lyrics).
 - Visit the project's website at <https://www.youka.club>.
 - Follow Youka on [Twitter](https://twitter.com/youka_club).
+
+![Home](https://i.imgur.com/bwbuNVj.png)
+![Watch](https://i.imgur.com/blciW33.png)
 
 ## Getting Started
 ```
