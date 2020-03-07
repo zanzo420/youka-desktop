@@ -2,7 +2,9 @@
 
 Karaoke for any song in any language.
 
-Visit the project's website at <https://www.youka.club> and follow us on [Twitter](https://twitter.com/youka_club).
+- Read about Youka on [The Verge](https://www.theverge.com/tldr/2020/2/19/21144452/youtube-youka-club-karaoke-lyrics).
+- Visit the project's website at <https://www.youka.club>.
+- Follow Youka on [Twitter](https://twitter.com/youka_club).
 
 ## Getting Started
 ```
@@ -12,12 +14,14 @@ $ npm install
 $ npm start
 ```
 
-## Thanks
-- All the artists in earth
-- [YouTube](https://www.youtube.com/)
-- [Spleeter](https://github.com/deezer/spleeter)
-- [FFmpeg](https://www.ffmpeg.org)
-- [Plyr](https://github.com/sampotts/plyr)
+## How it works
+- Search on YouTube using [youka@youtube](https://github.com/youkaclub/youka-youtube)
+- Search lyrics using [youka@lyrics](https://github.com/youkaclub/youka-lyrics)
+- Download video using [ytdl-core](https://github.com/fent/node-ytdl-core)
+- Split vocals from instruments using [spleeter](https://github.com/deezer/spleeter)
+- Align vocals to lyrics using private API (the hardest part)
+- Create 3 videos (instruments only, vocals only, original video) using [FFmpeg](https://www.ffmpeg.org)
+- Show you the results using [Plyr](https://github.com/sampotts/plyr)
 
 ***
 
