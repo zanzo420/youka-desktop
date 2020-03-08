@@ -22,7 +22,7 @@ $ npm start
 - Search lyrics using [youka@lyrics](https://github.com/youkaclub/youka-lyrics)
 - Download video using [ytdl-core](https://github.com/fent/node-ytdl-core)
 - Split vocals from instruments using [spleeter](https://github.com/deezer/spleeter)
-- Align vocals to lyrics using private API (the hardest part)
+- Align vocals to lyrics using [aeneas](https://github.com/readbeyond/aeneas)
 - Create 3 videos (instruments only, vocals only, original video) using [FFmpeg](https://www.ffmpeg.org)
 - Show you the results using [Plyr](https://github.com/sampotts/plyr)
 
