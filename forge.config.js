@@ -35,7 +35,7 @@ const config = {
       name: '@electron-forge/maker-deb',
       platforms: ['linux'],
       config: {
-        name: `youka-${version}`,
+        name: 'youka',
         icon: 'assets/logo.svg'
       }
     },
@@ -43,7 +43,7 @@ const config = {
       name: '@electron-forge/maker-rpm',
       platforms: ['linux'],
       config: {
-        name: `youka-${version}`,
+        name: 'youka',
         icon: 'assets/logo.svg'
       }
     }
