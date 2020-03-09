@@ -1,3 +1,6 @@
+const packageJson = require('./package.json')
+const { version } = packageJson
+
 module.exports = {
   packagerConfig: {
     icon: 'assets/logo.icns',
@@ -22,7 +25,7 @@ module.exports = {
     {
       name: '@electron-forge/maker-dmg',
       config: {
-        name: 'youka',
+        name: `youka-${version}.dmg`,
         icon: 'assets/logo.icns'
       },
     },
