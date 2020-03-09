@@ -1,7 +1,7 @@
 const packageJson = require('./package.json')
 const { version } = packageJson
 
-module.exports = {
+const config = {
   packagerConfig: {
     icon: 'assets/logo.icns',
     ignore: (file) => {
@@ -24,11 +24,28 @@ module.exports = {
     },
     {
       name: '@electron-forge/maker-dmg',
+      platforms: ['darwin'],
       config: {
-        name: `youka-${version}.dmg`,
+        name: `youka-${version}`,
         icon: 'assets/logo.icns'
       },
     },
+    {
+      name: '@electron-forge/maker-deb',
+      platforms: ['linux'],
+      config: {
+        name: `youka-${version}`,
+        icon: 'assets/logo.svg'
+      }
+    },
+    {
+      name: '@electron-forge/maker-rpm',
+      platforms: ['linux'],
+      config: {
+        name: `youka-${version}`,
+        icon: 'assets/logo.svg'
+      }
+    }
   ],
   publishers: [
     {
@@ -61,3 +78,5 @@ module.exports = {
     ]
   ]
 }
+
+module.exports = config
