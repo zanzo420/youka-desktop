@@ -3,6 +3,7 @@ const { version } = packageJson
 
 const config = {
   packagerConfig: {
+    executableName: 'youka',
     icon: 'assets/logo.icns',
     ignore: (file) => {
       if (!file) return false;
