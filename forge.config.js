@@ -9,9 +9,14 @@ module.exports = {
   makers: [
     {
       name: "@electron-forge/maker-squirrel",
-      config: {
-        name: 'youka',
-        setupIcon: 'assets/logo.ico'
+      platforms: ['win32'],
+      config: arch => {
+        return {
+          name: 'youka',
+          exe: 'youka.exe',
+          setupExe: `youka-win32-${arch}-${version}-setup.exe`,
+          setupIcon: 'assets/logo.ico',
+        }
       }
     },
     {
