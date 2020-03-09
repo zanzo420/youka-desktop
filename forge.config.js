@@ -11,7 +11,6 @@ module.exports = {
       name: "@electron-forge/maker-squirrel",
       config: {
         name: 'youka',
-        exe: 'youka.exe',
         setupIcon: 'assets/logo.ico'
       }
     },
