@@ -44,6 +44,14 @@ const ROOT = join(homedir, '.youka', 'youtube')
 const BINARIES_PATH = join(homedir, '.youka', 'binaries')
 const FFMPEG_PATH = join(BINARIES_PATH, 'ffmpeg')
 
+function info(youtubeID) {
+  const fpath = join(ROOT, youtubeID, 'info.json')
+  if (!fs.existsSync(fpath)) {
+    return {}
+  }
+  return JSON.parse(fs.readFileSync(fpath, 'utf-8'))
+}
+
 function fileurl(youtubeID, mode, file) {
   const fpath = filepath(youtubeID, mode, file)
   if (fs.existsSync(fpath)) {
@@ -149,6 +157,7 @@ async function downloadFfpmeg() {
 }
 
 export {
+  info,
   fileurl,
   filepath,
   generate,
