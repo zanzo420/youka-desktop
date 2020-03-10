@@ -47,7 +47,7 @@ const FFMPEG_PATH = join(BINARIES_PATH, 'ffmpeg')
 function info(youtubeID) {
   const fpath = join(ROOT, youtubeID, 'info.json')
   if (!fs.existsSync(fpath)) {
-    return {}
+    return
   }
   return JSON.parse(fs.readFileSync(fpath, 'utf-8'))
 }

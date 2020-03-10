@@ -27,7 +27,7 @@ export default function WatchPage() {
   const [captionsURL, setCaptionURL] = useState()
   const [error, setError] = useState()
   const [progress, setProgress] = useState(true)
-  const [info, setInfo] = useState({})
+  const [info, setInfo] = useState()
 
   function handleResults(results) {
     setResults(results)
@@ -61,7 +61,9 @@ export default function WatchPage() {
 
   useEffect(() => {
     const i = mess.info(youtubeID)
-    setInfo(i)
+    if (i) {
+      setInfo(i)
+    }
   }, [youtubeID])
 
   useEffect(() => {
@@ -119,9 +121,13 @@ export default function WatchPage() {
           <div style={{ width: '60vw' }}>
             <Player youtubeID={youtubeID} videoURL={videoURL} captionsURL={captionsURL} />
           </div>
-          <div className='text-xl font-bold m-2'>
-            {utils.cleanTitle(info.title)}
-          </div>
+          {
+            info ?
+            <div className='text-xl font-bold m-2'>
+              {utils.cleanTitle(info.title)}
+            </div>
+            : null
+          }
           <div className='flex flex-row w-full m-2 justify-center'>
             <div className='flex flex-row p-2 mx-4'>
               <div className='font-bold self-center'>VIDEO</div>
