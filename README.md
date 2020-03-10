@@ -6,8 +6,8 @@
 - Visit the project's website at <https://www.youka.club>.
 - Follow Youka on [Twitter](https://twitter.com/youka_club).
 
-![Home](https://static.youka.club/home.jpg)
-![Watch](https://static.youka.club/watch.jpg)
+[Watch a Demo](https://www.youtube.com/watch?v=MGjH51vyHEs)
+[![Watch the demo](https://static.youka.club/demo.jpg)](https://www.youtube.com/watch?v=MGjH51vyHEs)
 
 ## Getting Started
 ```
