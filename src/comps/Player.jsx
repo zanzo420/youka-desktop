@@ -35,8 +35,13 @@ export default function Player({ youtubeID, videoURL, captionsURL }) {
   }, [videoURL])
 
   useEffect(() => {
-    if (!captionsURL) return
-    captionsRef.current.setAttribute('src', captionsURL)
+    if (captionsURL) {
+      captionsRef.current.setAttribute('src', captionsURL)
+    } else {
+      const blob = new Blob(['WEBVTT\n\n00:00:00.000 --> 01:00:00.000'], { type: 'text/vtt' })
+      const url = URL.createObjectURL(blob)
+      captionsRef.current.setAttribute('src', url)
+    }
   }, [captionsURL])
 
   return (

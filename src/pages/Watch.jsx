@@ -10,6 +10,7 @@ import {
   CAPTIONS_MODES,
   MODE_MEDIA_INSTRUMENTS,
   MODE_CAPTIONS_LINE,
+  MODE_CAPTIONS_OFF,
   fileurl,
   generate,
 } from '../lib/mess'
@@ -58,11 +59,9 @@ export default function WatchPage() {
   }
 
   function changeCaptions(mode) {
+    setCaptionsMode(mode)
     const url = fileurl(youtubeID, mode, FILE_CAPTIONS)
-    if (url) {
-      setCaptionsMode(mode)
-      setCaptionURL(url)
-    }
+    setCaptionURL(url)
   }
 
   function handleChangeCaptions(e, data) {

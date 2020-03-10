@@ -22,6 +22,7 @@ const MODE_MEDIA_VOCALS = 'vocals'
 const MODE_CAPTIONS_LINE = 'line'
 const MODE_CAPTIONS_WORD = 'word'
 const MODE_CAPTIONS_ALL = 'all'
+const MODE_CAPTIONS_OFF = 'off'
 
 const MODE_LYRICS = 'lyrics'
 const MODE_INFO = 'info'
@@ -30,6 +31,7 @@ const CAPTIONS_MODES = [
   MODE_CAPTIONS_LINE,
   MODE_CAPTIONS_WORD,
   MODE_CAPTIONS_ALL,
+  MODE_CAPTIONS_OFF,
 ]
 
 const MEDIA_MODES = [
@@ -159,4 +161,5 @@ export {
   MODE_MEDIA_INSTRUMENTS,
   MODE_CAPTIONS_WORD,
   MODE_CAPTIONS_LINE,
+  MODE_CAPTIONS_OFF,
 }
