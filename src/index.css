@@ -54,3 +54,7 @@ a:hover {
 .bg-primary {
   background-color: #E30B17;
 }
+
+video {
+  max-height: 50vh;
+}
