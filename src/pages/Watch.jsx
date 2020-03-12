@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { memoize } from 'lodash'
 import { useParams } from "react-router-dom";
-import { Message, Icon, Loader } from 'semantic-ui-react'
+import { Message, Icon, Loader, Button } from 'semantic-ui-react'
 import { mix, utils } from '@youka/youtube'
 import * as mess from '../lib/mess'
 import VideoList from '../comps/VideoList'
@@ -10,6 +10,7 @@ import Search from '../comps/Search'
 import Radio from '../comps/Radio'
 import ReportButton from '../comps/ReportButton'
 
+const { shell } = require('electron')
 const debug = require('debug')('youka:desktop')
 const mix_memoize = memoize(mix)
 
@@ -29,6 +30,11 @@ export default function WatchPage() {
   const [error, setError] = useState()
   const [progress, setProgress] = useState(true)
   const [info, setInfo] = useState()
+
+  function handleClickDownload() {
+    const fpath = mess.filepath(youtubeID, mess.MODE_MEDIA_INSTRUMENTS, mess.FILE_VIDEO)
+    shell.showItemInFolder(fpath)
+  }
 
   function handleResults(results) {
     setResults(results)
@@ -130,7 +136,10 @@ export default function WatchPage() {
                   </div>
                   : null
               }
-              <ReportButton negative event={{category: 'report', action: 'report captions', label: youtubeID}}>Report Bad Captions</ReportButton>
+              <div>
+                <Button onClick={handleClickDownload}>Download</Button>
+                <ReportButton negative event={{ category: 'report', action: 'report captions', label: youtubeID }}>Report Bad Captions</ReportButton>
+              </div>
             </div>
             <div className='flex flex-row w-full m-2 justify-center'>
               <div className='flex flex-row p-2 mx-4'>
