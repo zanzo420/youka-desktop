@@ -1,6 +1,6 @@
 <p align="center"><img src="assets/logo.ico" width='80px'/></p>
 <h2 align="center"><b>Youka</b></h2>
-<h4 align="center">Generate karaoke for any song in any language</h4>
+<h4 align="center">sing karaoke, any song, any language</h4>
 
 - Read about Youka on [The Verge](https://www.theverge.com/tldr/2020/2/19/21144452/youtube-youka-club-karaoke-lyrics).
 - Visit the project's website at <https://www.youka.club>.
