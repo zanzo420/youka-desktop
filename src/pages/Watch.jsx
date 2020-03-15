@@ -67,13 +67,6 @@ export default function WatchPage() {
   }
 
   useEffect(() => {
-    const i = mess.info(youtubeID)
-    if (i) {
-      setInfo(i)
-    }
-  }, [youtubeID])
-
-  useEffect(() => {
     (async function () {
       const results = await mix_memoize(youtubeID)
       results.shift()
@@ -90,6 +83,7 @@ export default function WatchPage() {
         debug('start generate')
         await mess.generate(youtubeID)
         debug('end generate')
+        setInfo(mess.info(youtubeID))
         changeVideo(defaultVideo)
         changeCaptions(defaultCaptions)
         setProgress(false)
