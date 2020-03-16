@@ -156,8 +156,29 @@ async function downloadFfpmeg() {
   })
 }
 
+function library() {
+  const ids = fs.readdirSync(ROOT, { withFileTypes: true })
+    .filter(dirent => dirent.isDirectory())
+    .map(dirent => dirent.name)
+
+  const items = []
+  ids.map(id => {
+    const i = info(id)
+    if (i) {
+      items.push({
+        id: id,
+        image: `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
+        title: i.title,
+      })
+    }
+  })
+
+  return items
+}
+
 export {
   info,
+  library,
   fileurl,
   filepath,
   generate,
