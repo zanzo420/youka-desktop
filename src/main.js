@@ -1,5 +1,6 @@
 import { app, BrowserWindow } from "electron";
 import "./lib/sentry-main"
+const autoUpdate = require("update-electron-app")
 
 app.allowRendererProcessReuse = false
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "1"
@@ -9,7 +10,11 @@ if (require("electron-squirrel-startup")) { // eslint-disable-line global-requir
   app.quit();
 }
 
-require("update-electron-app")()
+try {
+  autoUpdate()
+} catch (error) {
+  console.log(error)
+}
 
 app.commandLine.appendSwitch("autoplay-policy", "no-user-gesture-required")
 
