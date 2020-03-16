@@ -1,19 +1,19 @@
-import '../lib/sentry'
-import React, { useEffect, useState } from 'react';
-import { memoize } from 'lodash'
+import "../lib/sentry"
+import React, { useEffect, useState } from "react";
+import { memoize } from "lodash"
 import { useParams } from "react-router-dom";
-import { Message, Icon, Loader, Button } from 'semantic-ui-react'
-import { mix, utils } from '@youka/youtube'
-import * as mess from '../lib/mess'
-import VideoList from '../comps/VideoList'
-import Player from '../comps/Player';
-import Search from '../comps/Search'
-import Radio from '../comps/Radio'
-import ReportButton from '../comps/ReportButton'
-import { usePageView } from '../lib/hooks'
+import { Message, Icon, Loader, Button } from "semantic-ui-react"
+import { mix, utils } from "@youka/youtube"
+import * as mess from "../lib/mess"
+import VideoList from "../comps/VideoList"
+import Player from "../comps/Player";
+import Search from "../comps/Search"
+import Radio from "../comps/Radio"
+import ReportButton from "../comps/ReportButton"
+import { usePageView } from "../lib/hooks"
 
-const { shell } = require('electron')
-const debug = require('debug')('youka:desktop')
+const { shell } = require("electron")
+const debug = require("debug")("youka:desktop")
 const mix_memoize = memoize(mix)
 
 
@@ -82,17 +82,17 @@ export default function WatchPage() {
   useEffect(() => {
     (async function () {
       try {
-        window.scrollTo({ top: 0, behavior: 'smooth' })
+        window.scrollTo({ top: 0, behavior: "smooth" })
         setError(null)
         setProgress(true)
-        debug('start generate')
+        debug("start generate")
         await mess.generate(youtubeID)
-        debug('end generate')
+        debug("end generate")
         setInfo(mess.info(youtubeID))
         changeVideo(defaultVideo)
         changeCaptions(defaultCaptions)
         setProgress(false)
-        window.scrollTo({ top: 0, behavior: 'smooth' })
+        window.scrollTo({ top: 0, behavior: "smooth" })
       } catch (error) {
         setError(error.toString())
         setProgress(false)
@@ -101,7 +101,7 @@ export default function WatchPage() {
   }, [youtubeID])
 
   return (
-    <div className='flex flex-col items-center'>
+    <div className="flex flex-col items-center">
       <Search handleResults={handleResults} handleLoading={handleLoading} />
       {error ?
         <Message negative>
@@ -110,9 +110,9 @@ export default function WatchPage() {
         </Message>
         : null}
       {progress ?
-        <div className='w-2/4'>
+        <div className="w-2/4">
           <Message icon>
-            <Icon name='circle notched' loading />
+            <Icon name="circle notched" loading />
             <Message.Content>
               <Message.Header>Loading</Message.Header>
               It may take a minute..
@@ -124,30 +124,30 @@ export default function WatchPage() {
       {
         videoURL && !error && !progress ?
           <div>
-            <div style={{ width: '60vw' }}>
+            <div style={{ width: "60vw" }}>
               <Player youtubeID={youtubeID} videoURL={videoURL} captionsURL={captionsURL} />
             </div>
-            <div className='flex flex-row justify-between p-2' style={{ width: '60vw' }}>
+            <div className="flex flex-row justify-between p-2" style={{ width: "60vw" }}>
               {
                 info ?
-                  <div className='text-xl font-bold m-2'>
+                  <div className="text-xl font-bold m-2">
                     {utils.cleanTitle(info.title)}
                   </div>
                   : null
               }
               <div>
                 <Button onClick={handleClickDownload}>Download</Button>
-                <ReportButton negative event={{ category: 'report', action: 'report captions', label: youtubeID }}>Report Bad Captions</ReportButton>
+                <ReportButton negative event={{ category: "report", action: "report captions", label: youtubeID }}>Report Bad Captions</ReportButton>
               </div>
             </div>
-            <div className='flex flex-row w-full m-2 justify-center'>
-              <div className='flex flex-row p-2 mx-4'>
-                <div className='font-bold self-center'>VIDEO</div>
-                <Radio name='video' checked={videoMode} values={mess.MEDIA_MODES} onChange={handleChangeVideo} />
+            <div className="flex flex-row w-full m-2 justify-center">
+              <div className="flex flex-row p-2 mx-4">
+                <div className="font-bold self-center">VIDEO</div>
+                <Radio name="video" checked={videoMode} values={mess.MEDIA_MODES} onChange={handleChangeVideo} />
               </div>
-              <div className='flex flex-row p-2 mx-4'>
-                <div className='font-bold self-center'>CAPTIONS</div>
-                <Radio name='captions' checked={captionsMode} values={mess.CAPTIONS_MODES} onChange={handleChangeCaptions} />
+              <div className="flex flex-row p-2 mx-4">
+                <div className="font-bold self-center">CAPTIONS</div>
+                <Radio name="captions" checked={captionsMode} values={mess.CAPTIONS_MODES} onChange={handleChangeCaptions} />
               </div>
             </div>
           </div>
@@ -156,7 +156,7 @@ export default function WatchPage() {
       {
         results.length && !loading ?
           <VideoList videos={results} /> :
-          <Loader active inline='centered' />
+          <Loader active inline="centered" />
       }
     </div>
   )

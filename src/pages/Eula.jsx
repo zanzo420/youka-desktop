@@ -1,17 +1,17 @@
-import React, { useState } from 'react'
-import { Button } from 'semantic-ui-react'
-const remote = require('electron').remote
+import React, { useState } from "react"
+import { Button } from "semantic-ui-react"
+const remote = require("electron").remote
 
 export function accepted() {
-  return localStorage.getItem('eula') === 'true'
+  return localStorage.getItem("eula") === "true"
 }
 
 export default function EulaPage() {
   const [stats, setStats] = useState(true)
 
   function handleAccept() {
-    window.localStorage.setItem('eula', true)
-    window.localStorage.setItem('stats', stats)
+    window.localStorage.setItem("eula", true)
+    window.localStorage.setItem("stats", stats)
     window.location.reload()
   }
   
@@ -25,14 +25,14 @@ export default function EulaPage() {
   }
 
   return (
-    <div className='flex flex-col items-center m-4'>
-      <div className='font-bold text-2xl p-4'>
+    <div className="flex flex-col items-center m-4">
+      <div className="font-bold text-2xl p-4">
         License Agreement
       </div>
-      <div className='font-bold p-4'>
+      <div className="font-bold p-4">
         You must accept the license agreement before continuing
       </div>
-      <div className='overflow-scroll overflow-x-auto p-6' style={{ maxWidth: '90vh', maxHeight: '50vh' }}>
+      <div className="overflow-scroll overflow-x-auto p-6" style={{ maxWidth: "90vh", maxHeight: "50vh" }}>
         <h2>End-User License Agreement (EULA) of <span className="font-bold">Youka</span></h2>
 
         <p>This End-User License Agreement ("EULA") is a legal agreement between you and <span className="font-bold">Youka</span></p>
@@ -79,15 +79,15 @@ export default function EulaPage() {
 
         <p>This EULA agreement, and any dispute arising out of or in connection with this EULA agreement, shall be governed by and construed in accordance with the laws of <span className="country">us</span>.</p>
       </div>
-      <form className='m-4'>
+      <form className="m-4">
         <label>
-        <input className='mx-2' type="checkbox" name="stats" checked={stats} onChange={handleChangeStats} />
+        <input className="mx-2" type="checkbox" name="stats" checked={stats} onChange={handleChangeStats} />
         Help make Youka better by sending anonymous usage statistics and crash reports to the Youka project.
         </label>
       </form>
-      <div className='flex flex-row m-4'>
-        <Button className='m-2' content='Decline' onClick={handleDecline}/>
-        <Button className='m-2' content='Accept' primary onClick={handleAccept}/>
+      <div className="flex flex-row m-4">
+        <Button className="m-2" content="Decline" onClick={handleDecline}/>
+        <Button className="m-2" content="Accept" primary onClick={handleAccept}/>
       </div>
     </div>
   )

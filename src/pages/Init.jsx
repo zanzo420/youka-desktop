@@ -1,7 +1,7 @@
-import '../lib/sentry'
-import React, { useState, useEffect } from 'react';
-import { Message, Icon } from 'semantic-ui-react'
-import { ffmpegExists, downloadFfpmeg } from '../lib/mess'
+import "../lib/sentry"
+import React, { useState, useEffect } from "react";
+import { Message, Icon } from "semantic-ui-react"
+import { ffmpegExists, downloadFfpmeg } from "../lib/mess"
 
 export function initialized() {
   return ffmpegExists()
@@ -33,7 +33,7 @@ export default function InitPage() {
       </Message>
       :
       <Message icon>
-        <Icon name='circle notched' loading />
+        <Icon name="circle notched" loading />
         <Message.Content>
           <Message.Header>Initializing</Message.Header>
         It may take a minute..

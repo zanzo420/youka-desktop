@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import { Button } from 'semantic-ui-react';
-import GA from 'react-ga';
+import React, { useState } from "react";
+import { Button } from "semantic-ui-react";
+import GA from "react-ga";
 
 export default function ReportButton(props) {
   const [disabled, setDisabled] = useState(false)
@@ -8,7 +8,7 @@ export default function ReportButton(props) {
 
   function handleClick() {
     setDisabled(true)
-    setText('Thanks!')
+    setText("Thanks!")
     GA.event(props.event)
   }
 

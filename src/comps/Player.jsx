@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef, useEffect } from "react";
 import Plyr from "plyr"
 import "plyr/dist/plyr.css"
 
@@ -11,22 +11,22 @@ export default function Player({ youtubeID, videoURL, captionsURL }) {
 
   useEffect(() => {
     const plyrOptions = {
-      controls: ['play-large', 'play', 'progress', 'volume', 'fullscreen'],
+      controls: ["play-large", "play", "progress", "volume", "fullscreen"],
       captions: {
         active: true,
-        language: 'en'
+        language: "en"
       }
     }
-    playerRef.current = new Plyr('#player', plyrOptions)
+    playerRef.current = new Plyr("#player", plyrOptions)
   }, [])
 
   useEffect(() => {
     (async function () {
       if (!videoURL) return
-      const currVideoURL = videoRef.current.getAttribute('src')
+      const currVideoURL = videoRef.current.getAttribute("src")
       const isSame = currVideoURL && currVideoURL.includes(youtubeID)
       const currentTime = playerRef.current.currentTime
-      videoRef.current.setAttribute('src', videoURL)
+      videoRef.current.setAttribute("src", videoURL)
       await playerRef.current.play()
       if (isSame) {
         playerRef.current.currentTime = currentTime
@@ -36,11 +36,11 @@ export default function Player({ youtubeID, videoURL, captionsURL }) {
 
   useEffect(() => {
     if (captionsURL) {
-      captionsRef.current.setAttribute('src', captionsURL)
+      captionsRef.current.setAttribute("src", captionsURL)
     } else {
-      const blob = new Blob(['WEBVTT\n\n00:00:00.000 --> 01:00:00.000'], { type: 'text/vtt' })
+      const blob = new Blob(["WEBVTT\n\n00:00:00.000 --> 01:00:00.000"], { type: "text/vtt" })
       const url = URL.createObjectURL(blob)
-      captionsRef.current.setAttribute('src', url)
+      captionsRef.current.setAttribute("src", url)
     }
   }, [captionsURL])
 
@@ -48,14 +48,14 @@ export default function Player({ youtubeID, videoURL, captionsURL }) {
     <video
       controls
       playsInline
-      width='480'
-      height='360'
+      width="480"
+      height="360"
       id="player"
       crossOrigin="true"
       ref={videoRef}
       type="video/mp4"
-      className='object-cover'
-      preload='auto'
+      className="object-cover"
+      preload="auto"
     >
       <track
         default

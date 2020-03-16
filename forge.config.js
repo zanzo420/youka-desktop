@@ -1,10 +1,10 @@
-const packageJson = require('./package.json')
+const packageJson = require("./package.json")
 const { version } = packageJson
 
 const config = {
   packagerConfig: {
-    executableName: 'youka',
-    icon: 'assets/logo.icns',
+    executableName: "youka",
+    icon: "assets/logo.icns",
     ignore: (file) => {
       if (!file) return false;
       return !/^[/\\]\.webpack($|[/\\]).*$/.test(file)
@@ -13,38 +13,38 @@ const config = {
   makers: [
     {
       name: "@electron-forge/maker-squirrel",
-      platforms: ['win32'],
+      platforms: ["win32"],
       config: arch => {
         return {
-          name: 'youka',
-          exe: 'youka.exe',
+          name: "youka",
+          exe: "youka.exe",
           setupExe: `youka-win32-${arch}-${version}-setup.exe`,
-          setupIcon: 'assets/logo.ico',
+          setupIcon: "assets/logo.ico",
         }
       }
     },
     {
-      name: '@electron-forge/maker-dmg',
-      platforms: ['darwin'],
+      name: "@electron-forge/maker-dmg",
+      platforms: ["darwin"],
       config: {
         name: `youka-${version}`,
-        icon: 'assets/logo.icns'
+        icon: "assets/logo.icns"
       },
     },
     {
-      name: '@electron-forge/maker-deb',
-      platforms: ['linux'],
+      name: "@electron-forge/maker-deb",
+      platforms: ["linux"],
       config: {
-        name: 'youka',
-        icon: 'assets/logo.svg'
+        name: "youka",
+        icon: "assets/logo.svg"
       }
     },
     {
-      name: '@electron-forge/maker-rpm',
-      platforms: ['linux'],
+      name: "@electron-forge/maker-rpm",
+      platforms: ["linux"],
       config: {
-        name: 'youka',
-        icon: 'assets/logo.svg'
+        name: "youka",
+        icon: "assets/logo.svg"
       }
     }
   ],

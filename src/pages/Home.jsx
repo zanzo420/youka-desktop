@@ -1,11 +1,11 @@
-import '../lib/sentry'
-import React, { useState, useEffect } from 'react';
-import { memoize } from 'lodash'
-import { utils, trending } from '@youka/youtube'
-import { Loader } from 'semantic-ui-react'
-import Search from '../comps/Search'
-import VideoList from '../comps/VideoList'
-import { usePageView } from '../lib/hooks'
+import "../lib/sentry"
+import React, { useState, useEffect } from "react";
+import { memoize } from "lodash"
+import { utils, trending } from "@youka/youtube"
+import { Loader } from "semantic-ui-react"
+import Search from "../comps/Search"
+import VideoList from "../comps/VideoList"
+import { usePageView } from "../lib/hooks"
 
 const trending_memoize = memoize(trending)
 
@@ -38,7 +38,7 @@ export default function HomePage() {
       {
         results.length && !loading ?
           <VideoList videos={results} /> :
-          <Loader active inline='centered' />
+          <Loader active inline="centered" />
       }
     </div>
   )

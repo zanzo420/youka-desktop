@@ -1,5 +1,5 @@
-import React from 'react'
-import { Form, Radio } from 'semantic-ui-react';
+import React from "react"
+import { Form, Radio } from "semantic-ui-react";
 
 export default function Radioo ({ name, values, checked, onChange }) {
   return (
@@ -8,7 +8,7 @@ export default function Radioo ({ name, values, checked, onChange }) {
         values.map((value, i) => (
           <Form.Field key={i}>
             <Radio
-              className='p-2'
+              className="p-2"
               name={name}
               checked={checked===value}
               value={value}
