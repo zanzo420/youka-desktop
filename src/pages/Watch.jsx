@@ -27,6 +27,7 @@ export default function WatchPage() {
   const defaultCaptions = mess.MODE_CAPTIONS_LINE
 
   const [loading, setLoading] = useState(false)
+  const [searching, setSearching] = useState(false)
   const [results, setResults] = useState([])
   const [videoMode, setVideoMode] = useState(defaultVideo)
   const [captionsMode, setCaptionsMode] = useState(defaultCaptions)
@@ -48,6 +49,11 @@ export default function WatchPage() {
   function handleLoading(value) {
     setLoading(value)
   }
+
+  function handleSearching(value) {
+    setSearching(value)
+  }
+
 
   function handleChangeVideo(e, data) {
     changeVideo(data.value)
@@ -102,7 +108,7 @@ export default function WatchPage() {
 
   return (
     <div className="flex flex-col items-center">
-      <Search handleResults={handleResults} handleLoading={handleLoading} />
+      <Search handleResults={handleResults} handleLoading={handleLoading} handleSearching={handleSearching}/>
       {error ?
         <Message negative>
           <Message.Header>Ooops, some error occurred :(</Message.Header>
@@ -122,7 +128,7 @@ export default function WatchPage() {
         : null
       }
       {
-        videoURL && !error && !progress ?
+        videoURL && !error && !progress && !searching ?
           <div>
             <div style={{ width: "60vw" }}>
               <Player youtubeID={youtubeID} videoURL={videoURL} captionsURL={captionsURL} />
