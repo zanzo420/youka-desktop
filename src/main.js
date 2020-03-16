@@ -1,4 +1,5 @@
 import { app, BrowserWindow } from 'electron';
+import './lib/sentry-main'
 
 app.allowRendererProcessReuse = false
 process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = '1'
@@ -18,7 +19,7 @@ const createWindow = () => {
     show: false,
     webPreferences: {
       webSecurity: false,
-      nodeIntegration: true
+      nodeIntegration: true,
     }
   });
   mainWindow.maximize();

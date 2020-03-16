@@ -1,3 +1,4 @@
+import '../lib/sentry'
 import React, { useEffect, useState } from 'react';
 import { memoize } from 'lodash'
 import { useParams } from "react-router-dom";
@@ -9,12 +10,16 @@ import Player from '../comps/Player';
 import Search from '../comps/Search'
 import Radio from '../comps/Radio'
 import ReportButton from '../comps/ReportButton'
+import { usePageView } from '../lib/hooks'
 
 const { shell } = require('electron')
 const debug = require('debug')('youka:desktop')
 const mix_memoize = memoize(mix)
 
+
 export default function WatchPage() {
+  usePageView()
+
   const { youtubeID } = useParams()
   if (!youtubeID) return null
 

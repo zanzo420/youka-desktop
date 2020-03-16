@@ -1,5 +1,5 @@
+const webpack = require('webpack')
 const rules = require('./webpack.rules');
-const plugins = require('./webpack.plugins');
 
 rules.push({
   test: /\.css$/,
@@ -10,7 +10,11 @@ module.exports = {
   module: {
     rules,
   },
-  plugins: plugins,
+  plugins: [
+    new webpack.DefinePlugin({
+      'process.env.FLUENTFFMPEG_COV': false,
+    })
+  ],
   resolve: {
     alias: { 'react-dom': '@hot-loader/react-dom' },
     extensions: ['.js', '.ts', '.jsx', '.tsx', '.css']
