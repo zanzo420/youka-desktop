@@ -1,10 +1,14 @@
 import ua from "universal-analytics"
 import { useEffect } from "react";
+import { v4 as uuid4 } from "uuid";
 import { version } from "../../package.json"
 import config from "../config"
 
 export const stats = localStorage.getItem("stats") === "true"
-export const visitor = ua(config.ua)
+export const user = localStorage.getItem("user") || uuid4()
+export const visitor = ua(config.ua, user)
+
+localStorage.setItem("user", user)
 
 export function useScreenView(screenName) {
   if (!stats) return
