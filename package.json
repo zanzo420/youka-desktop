@@ -55,12 +55,12 @@
     "fluent-ffmpeg": "^2.1.2",
     "fork-ts-checker-webpack-plugin": "^3.1.1",
     "lodash": "^4.17.15",
+    "minimist": ">=1.2.2",
     "mkdirp": "^1.0.3",
     "node-loader": "^0.6.0",
     "plyr": "^3.5.10",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
-    "react-ga": "^2.7.0",
     "react-hot-loader": "^4.12.19",
     "react-router-dom": "^5.1.2",
     "request": "^2.88.2",
@@ -69,11 +69,11 @@
     "stream-to-blob": "^2.0.0",
     "style-loader": "^0.23.1",
     "tailwindcss": "^1.2.0",
+    "universal-analytics": "^0.4.20",
     "update-electron-app": "^1.5.0",
     "url-loader": "^3.0.0",
     "uuid": "^7.0.2",
-    "webpack": "^4.42.0",
-    "minimist": ">=1.2.2"
+    "webpack": "^4.42.0"
   },
   "license": "MIT"
 }

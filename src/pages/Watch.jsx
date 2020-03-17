@@ -8,17 +8,18 @@ import Shell, { PLAYLIST_MIX } from "../comps/Shell";
 import Player from "../comps/Player";
 import Radio from "../comps/Radio"
 import ReportButton from "../comps/ReportButton"
-import { usePageView } from "../lib/hooks"
+import { useScreenView, useEvent } from "../lib/hooks"
 
 const { shell } = require("electron")
 const debug = require("debug")("youka:desktop")
 
 
 export default function WatchPage() {
-  usePageView()
-
   const { youtubeID } = useParams()
   if (!youtubeID) return null
+
+  useScreenView('Watch')
+  useEvent("Watch", "Click", youtubeID)
 
   const defaultVideo = mess.MODE_MEDIA_INSTRUMENTS
   const defaultCaptions = mess.MODE_CAPTIONS_LINE
@@ -116,7 +117,7 @@ export default function WatchPage() {
                 }
                 <div>
                   <Button onClick={handleClickDownload}>Download</Button>
-                  <ReportButton negative event={{ category: "report", action: "report captions", label: youtubeID }}>Report Bad Captions</ReportButton>
+                  <ReportButton category="report" action="report captions" label={youtubeID}>Report Bad Captions</ReportButton>
                 </div>
               </div>
               <div className="flex flex-row w-full m-2 justify-center">

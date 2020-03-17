@@ -1,30 +1,23 @@
-import ReactGA from "react-ga";
-import { useEffect, useState } from "react";
-import { useLocation } from "react-router-dom";
-import { v4 as uuidv4 } from "uuid";
+import ua from 'universal-analytics'
+import { useEffect } from "react";
+import { version } from '../../package.json'
+import config from '../config'
 
 export const stats = localStorage.getItem("stats") === "true"
+export const visitor = ua(config.ua)
 
-export function useUser() {
-  const [user, setUser] = useState(window.localStorage.getItem("user"))
-
-  useEffect(() => {
-    if (!user) {
-      const id = uuidv4()
-      window.localStorage.setItem("user", id)
-      setUser(id)
-    }
-  }, [user])
-
-  return user
-}
-
-export function usePageView() {
+export function useScreenView(screenName) {
   if (!stats) return
 
-  const location = useLocation()
+  useEffect(() => {
+    visitor.screenview(screenName, "Youka", version).send()
+  }, [screenName])
+}
+
+export function useEvent(category, action, label) {
+  if (!stats) return
 
   useEffect(() => {
-    ReactGA.pageview(location.pathname)
-  }, [location.pathname])
+    visitor.event(category, action, label).send()
+  }, [category, action, label])
 }
