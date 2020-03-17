@@ -4,7 +4,7 @@ import Shell, { PLAYLIST_TRENDING } from "../comps/Shell"
 import { useScreenView } from "../lib/hooks"
 
 export default function HomePage() {
-  useScreenView('Home')
+  useScreenView("Home")
 
   return (
     <Shell defaultPlaylist={PLAYLIST_TRENDING} />

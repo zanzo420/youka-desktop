@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { Button } from "semantic-ui-react";
-import { visitor } from '../lib/hooks'
+import { visitor } from "../lib/hooks"
 
 export default function ReportButton({ category, action, label, children }) {
   const [disabled, setDisabled] = useState(false)

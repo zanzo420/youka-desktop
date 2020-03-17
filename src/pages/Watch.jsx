@@ -18,7 +18,7 @@ export default function WatchPage() {
   const { youtubeID } = useParams()
   if (!youtubeID) return null
 
-  useScreenView('Watch')
+  useScreenView("Watch")
   useEvent("Watch", "Click", youtubeID)
 
   const defaultVideo = mess.MODE_MEDIA_INSTRUMENTS

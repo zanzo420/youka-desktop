@@ -1,7 +1,7 @@
-import ua from 'universal-analytics'
+import ua from "universal-analytics"
 import { useEffect } from "react";
-import { version } from '../../package.json'
-import config from '../config'
+import { version } from "../../package.json"
+import config from "../config"
 
 export const stats = localStorage.getItem("stats") === "true"
 export const visitor = ua(config.ua)
