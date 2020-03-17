@@ -61,6 +61,7 @@ export default function Shell({ children, youtubeID, defaultPlaylist }) {
       setVideos(utils.cleanResults(results))
     } catch (error) {
       console.error(error)
+      setVideos([])
     } finally {
       setLoading(false)
     }
@@ -74,6 +75,7 @@ export default function Shell({ children, youtubeID, defaultPlaylist }) {
       setVideos(utils.cleanResults(results))
     } catch (error) {
       console.error(error)
+      setVideos([])
     } finally {
       setLoading(false)
     }
@@ -86,6 +88,7 @@ export default function Shell({ children, youtubeID, defaultPlaylist }) {
       setVideos(mess.library())
     } catch (error) {
       console.error(error)
+      setVideos([])
     } finally {
       setLoading(false)
     }
@@ -109,6 +112,7 @@ export default function Shell({ children, youtubeID, defaultPlaylist }) {
       setVideos(filteredResults)
     } catch (error) {
       console.error(error)
+      setVideos([])
     } finally {
       setLoading(false)
     }
