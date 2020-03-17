@@ -8,7 +8,7 @@ import Shell, { PLAYLIST_MIX } from "../comps/Shell";
 import Player from "../comps/Player";
 import Radio from "../comps/Radio"
 import ReportButton from "../comps/ReportButton"
-import { useScreenView, useEvent } from "../lib/hooks"
+import { useEvent } from "../lib/hooks"
 
 const { shell } = require("electron")
 const debug = require("debug")("youka:desktop")
@@ -18,7 +18,6 @@ export default function WatchPage() {
   const { youtubeID } = useParams()
   if (!youtubeID) return null
 
-  useScreenView("Watch")
   useEvent("Watch", "Click", youtubeID)
 
   const defaultVideo = mess.MODE_MEDIA_INSTRUMENTS
