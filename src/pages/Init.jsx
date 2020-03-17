@@ -1,23 +1,20 @@
 import "../lib/sentry"
 import React, { useState, useEffect } from "react";
 import { Message, Icon } from "semantic-ui-react"
-import { ffmpegExists, downloadFfpmeg } from "../lib/mess"
+import { downloadFfpmeg } from "../lib/mess"
 
 export function initialized() {
-  return ffmpegExists()
+  return window.localStorage.getItem("initialized") === "true"
 }
 
 export default function InitPage() {
-  const [initialized, setInitialized] = useState(ffmpegExists())
   const [error, setError] = useState()
 
   useEffect(() => {
     (async () => {
       try {
-        if (!initialized) {
-          await downloadFfpmeg()
-        }
-        setInitialized(true)
+        await downloadFfpmeg()
+        window.localStorage.setItem("initialized", true)
         window.location.reload()
       } catch (error) {
         setError(error.toString())
