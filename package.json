@@ -2,7 +2,7 @@
   "name": "youka",
   "productName": "Youka",
   "repository": "https://github.com/youkaclub/youka-desktop",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "author": "Youka",
   "description": "karaoke for any song in any language",
   "main": ".webpack/main",
