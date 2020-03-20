@@ -72,6 +72,7 @@ export default function Shell({ children, youtubeID, defaultPlaylist }) {
       setLoading(true)
       setPlaylist(PLAYLIST_MIX)
       const results = await mix_memoize(youtubeID)
+      results.shift()
       setVideos(utils.cleanResults(results))
     } catch (error) {
       console.error(error)
