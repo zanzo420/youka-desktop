@@ -32,7 +32,7 @@ export default function WatchPage() {
   const [info, setInfo] = useState()
 
   function handleClickDownload() {
-    const fpath = mess.filepath(youtubeID, mess.MODE_MEDIA_INSTRUMENTS, mess.FILE_VIDEO)
+    const fpath = mess.filepath(youtubeID, videoMode, mess.FILE_VIDEO)
     shell.showItemInFolder(fpath)
   }
 
