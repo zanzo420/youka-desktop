@@ -12,6 +12,9 @@
   ],
   "parser": "babel-eslint",
   "settings": {
+    "react": {
+      "version": "detect"
+    },
     "import/resolver": {
       "node": {
         "extensions": [".js",".jsx"]
