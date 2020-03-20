@@ -1,17 +1,20 @@
 import React, { useState } from "react"
 import { Button } from "semantic-ui-react"
+import store from "../lib/store"
+
 const remote = require("electron").remote
 
+
 export function accepted() {
-  return localStorage.getItem("eula") === "true"
+  return store.get("eula") === true
 }
 
 export default function EulaPage() {
   const [stats, setStats] = useState(true)
 
   function handleAccept() {
-    window.localStorage.setItem("eula", true)
-    window.localStorage.setItem("stats", stats)
+    store.set("eula", true)
+    store.set("stats", stats)
     window.location.reload()
   }
   

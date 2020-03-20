@@ -2,9 +2,10 @@ import "../lib/sentry"
 import React, { useState, useEffect } from "react";
 import { Message, Icon } from "semantic-ui-react"
 import { downloadFfpmeg } from "../lib/mess"
+import store from "../lib/store"
 
 export function initialized() {
-  return window.localStorage.getItem("initialized") === "true"
+  return store.get("initialized") === true
 }
 
 export default function InitPage() {
@@ -14,7 +15,7 @@ export default function InitPage() {
     (async () => {
       try {
         await downloadFfpmeg()
-        window.localStorage.setItem("initialized", true)
+        store.set("initialized", true)
         window.location.reload()
       } catch (error) {
         setError(error.toString())

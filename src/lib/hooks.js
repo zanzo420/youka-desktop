@@ -3,12 +3,13 @@ import { useEffect } from "react";
 import { v4 as uuid4 } from "uuid";
 import { version } from "../../package.json"
 import config from "../config"
+import store from "./store"
 
-export const stats = localStorage.getItem("stats") === "true"
-export const user = localStorage.getItem("user") || uuid4()
+export const stats = store.get("stats")
+export const user = store.get("user") || uuid4()
 export const visitor = ua(config.ua, user)
 
-localStorage.setItem("user", user)
+store.set("user", user)
 
 export function useScreenView(screenName) {
   if (!stats) return

@@ -1,7 +1,8 @@
 import * as Sentry from "@sentry/electron";
 import { dsn } from "../config"
+import store from "./store"
 
-const stats = localStorage.getItem("stats") === "true"
+const stats = store.get("stats")
 
 if (stats) {
   Sentry.init({ dsn })
