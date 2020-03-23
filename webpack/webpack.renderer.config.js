@@ -1,4 +1,4 @@
-const webpack = require("webpack")
+const webpack = require("webpack");
 const rules = require("./webpack.rules");
 
 rules.push({
@@ -13,10 +13,10 @@ module.exports = {
   plugins: [
     new webpack.DefinePlugin({
       "process.env.FLUENTFFMPEG_COV": false,
-    })
+    }),
   ],
   resolve: {
     alias: { "react-dom": "@hot-loader/react-dom" },
-    extensions: [".js", ".ts", ".jsx", ".tsx", ".css"]
+    extensions: [".js", ".ts", ".jsx", ".tsx", ".css"],
   },
 };

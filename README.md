@@ -10,6 +10,7 @@
 [![Watch the demo](https://static.youka.club/demo.jpg)](https://www.youtube.com/watch?v=MGjH51vyHEs)
 
 ## Getting Started
+
 ```
 $ git clone https://github.com/youkaclub/youka-desktop.git
 $ cd youka-desktop
@@ -18,6 +19,7 @@ $ npm start
 ```
 
 ## How it works
+
 - Search on YouTube using [youka@youtube](https://github.com/youkaclub/youka-youtube)
 - Search lyrics using [youka@lyrics](https://github.com/youkaclub/youka-lyrics)
 - Download video using [ytdl-core](https://github.com/fent/node-ytdl-core)
@@ -26,16 +28,16 @@ $ npm start
 - Create 3 videos (instruments only, vocals only, original video) using [FFmpeg](https://www.ffmpeg.org)
 - Show you the results using [Plyr](https://github.com/sampotts/plyr)
 
-***
+---
 
 If you distribute a copy or make a fork of the project, you have to credit this project as the source.
 
 This program is free software: you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation, either version 3 of the License, or (at your option) any later version.
 
-This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the GNU General Public License for more details.
+This program is distributed in the hope that it will be useful, but WITHOUT ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
-You should have received a copy of the GNU General Public License along with this program.  If not, see http://www.gnu.org/licenses/.
+You should have received a copy of the GNU General Public License along with this program. If not, see http://www.gnu.org/licenses/.
 
-***
+---
 
 Copyright © 2020 Youka Project - Released under the [GPL v3 license](LICENSE.txt).

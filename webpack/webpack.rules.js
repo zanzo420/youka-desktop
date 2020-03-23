@@ -18,11 +18,11 @@ module.exports = [
     test: /\.(js|jsx)$/,
     exclude: /(node_modules|\.webpack)/,
     use: {
-      loader: "babel-loader"
-    }
+      loader: "babel-loader",
+    },
   },
   {
     test: /\.(png|woff|woff2|eot|ttf|svg)$/,
-    loader: "url-loader?limit=100000"
+    loader: "url-loader?limit=100000",
   },
 ];

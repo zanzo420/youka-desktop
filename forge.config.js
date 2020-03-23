@@ -1,5 +1,5 @@
-const packageJson = require("./package.json")
-const { version } = packageJson
+const packageJson = require("./package.json");
+const { version } = packageJson;
 
 const config = {
   packagerConfig: {
@@ -7,28 +7,28 @@ const config = {
     icon: "assets/logo.icns",
     ignore: (file) => {
       if (!file) return false;
-      return !/^[/\\]\.webpack($|[/\\]).*$/.test(file)
+      return !/^[/\\]\.webpack($|[/\\]).*$/.test(file);
     },
   },
   makers: [
     {
       name: "@electron-forge/maker-squirrel",
       platforms: ["win32"],
-      config: arch => {
+      config: (arch) => {
         return {
           name: "youka",
           exe: "youka.exe",
           setupExe: `youka-win32-${arch}-${version}-setup.exe`,
           setupIcon: "assets/logo.ico",
-        }
-      }
+        };
+      },
     },
     {
       name: "@electron-forge/maker-dmg",
       platforms: ["darwin"],
       config: {
         name: `youka-${version}`,
-        icon: "assets/logo.icns"
+        icon: "assets/logo.icns",
       },
     },
     {
@@ -36,17 +36,17 @@ const config = {
       platforms: ["linux"],
       config: {
         name: "youka",
-        icon: "assets/logo.svg"
-      }
+        icon: "assets/logo.svg",
+      },
     },
     {
       name: "@electron-forge/maker-rpm",
       platforms: ["linux"],
       config: {
         name: "youka",
-        icon: "assets/logo.svg"
-      }
-    }
+        icon: "assets/logo.svg",
+      },
+    },
   ],
   publishers: [
     {
@@ -54,11 +54,11 @@ const config = {
       config: {
         repository: {
           owner: "youkaclub",
-          name: "youka-desktop"
+          name: "youka-desktop",
         },
-        draft: true
-      }
-    }
+        draft: true,
+      },
+    },
   ],
   plugins: [
     [
@@ -71,13 +71,13 @@ const config = {
             {
               html: "./src/index.html",
               js: "./src/index.jsx",
-              name: "main_window"
-            }
-          ]
-        }
-      }
-    ]
-  ]
-}
+              name: "main_window",
+            },
+          ],
+        },
+      },
+    ],
+  ],
+};
 
-module.exports = config
+module.exports = config;

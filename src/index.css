@@ -1,5 +1,5 @@
 *:focus {
-  outline:0 !important;
+  outline: 0 !important;
 }
 
 a:hover {
@@ -20,7 +20,7 @@ a:hover {
 }
 
 .plyr__captions {
-  background: rgba(0,0,0,.8);
+  background: rgba(0, 0, 0, 0.8);
 }
 
 .plyr__captions .plyr__caption .captions-all {
@@ -28,13 +28,16 @@ a:hover {
   line-height: 1%;
 }
 
-.captions-curr-line, .captions-curr-word {
+.captions-curr-line,
+.captions-curr-word {
   color: #2185d0;
   font-weight: bold;
   line-height: 185%;
 }
 
-.captions-next-line, .captions-after-word, .captions-before-word {
+.captions-next-line,
+.captions-after-word,
+.captions-before-word {
   color: #ccc;
   font-weight: bold;
   line-height: 185%;
@@ -52,5 +55,5 @@ a:hover {
 }
 
 .bg-primary {
-  background-color: #E30B17;
+  background-color: #e30b17;
 }

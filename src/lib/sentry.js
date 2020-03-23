@@ -1,9 +1,9 @@
 import * as Sentry from "@sentry/electron";
-import { dsn } from "../config"
-import store from "./store"
+import { dsn } from "../config";
+import store from "./store";
 
-const stats = store.get("stats")
+const stats = store.get("stats");
 
 if (stats) {
-  Sentry.init({ dsn })
+  Sentry.init({ dsn });
 }

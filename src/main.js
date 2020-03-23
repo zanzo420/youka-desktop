@@ -1,22 +1,23 @@
 import { app, BrowserWindow } from "electron";
-import "./lib/sentry-main"
-const autoUpdate = require("update-electron-app")
+import "./lib/sentry-main";
+const autoUpdate = require("update-electron-app");
 
-app.allowRendererProcessReuse = false
-process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "1"
+app.allowRendererProcessReuse = false;
+process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "1";
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
-if (require("electron-squirrel-startup")) { // eslint-disable-line global-require
+if (require("electron-squirrel-startup")) {
+  // eslint-disable-line global-require
   app.quit();
 }
 
 try {
-  autoUpdate()
+  autoUpdate();
 } catch (error) {
-  console.log(error)
+  console.log(error);
 }
 
-app.commandLine.appendSwitch("autoplay-policy", "no-user-gesture-required")
+app.commandLine.appendSwitch("autoplay-policy", "no-user-gesture-required");
 
 const createWindow = () => {
   // Create the browser window.
@@ -25,7 +26,7 @@ const createWindow = () => {
     webPreferences: {
       webSecurity: false,
       nodeIntegration: true,
-    }
+    },
   });
   mainWindow.maximize();
   mainWindow.show();

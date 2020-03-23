@@ -1,4 +1,4 @@
-const rules = require("./webpack.rules")
+const rules = require("./webpack.rules");
 
 module.exports = {
   /**
@@ -11,6 +11,6 @@ module.exports = {
     rules,
   },
   resolve: {
-    extensions: [".js", ".jsx", ".css", ".json"]
+    extensions: [".js", ".jsx", ".css", ".json"],
   },
 };

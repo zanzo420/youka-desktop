@@ -1,25 +1,21 @@
 import React from "react";
-import {
-  HashRouter as Router,
-  Switch,
-  Route,
-} from "react-router-dom";
+import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import { hot } from "react-hot-loader";
 import Home from "./pages/Home";
 import Watch from "./pages/Watch";
-import Eula, { accepted } from "./pages/Eula"
-import Init, { initialized } from "./pages/Init"
-import "semantic-ui-css/semantic.min.css"
-import "tailwindcss/dist/tailwind.min.css"
-import "./index.css"
+import Eula, { accepted } from "./pages/Eula";
+import Init, { initialized } from "./pages/Init";
+import "semantic-ui-css/semantic.min.css";
+import "tailwindcss/dist/tailwind.min.css";
+import "./index.css";
 
 function App() {
   if (!accepted()) {
-    return <Eula />
+    return <Eula />;
   }
 
   if (!initialized()) {
-    return <Init />
+    return <Init />;
   }
 
   return (
