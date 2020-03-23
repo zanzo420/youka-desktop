@@ -6,7 +6,7 @@ import config from "../config";
 import store from "./store";
 
 export const stats = store.get("stats");
-export const user = store.get("user") || uuid4();
+export const user = store.get("user", uuid4());
 export const visitor = ua(config.ua, user);
 
 store.set("user", user);
