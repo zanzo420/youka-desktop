@@ -39,17 +39,17 @@ export default function WatchPage() {
     changeVideo(data.value);
   }
 
-  function changeVideo(mode) {
-    const url = mess.fileurl(youtubeID, mode, mess.FILE_VIDEO);
+  async function changeVideo(mode) {
+    const url = await mess.fileurl(youtubeID, mode, mess.FILE_VIDEO);
     if (url) {
       setVideoMode(mode);
       setVideoURL(url);
     }
   }
 
-  function changeCaptions(mode) {
+  async function changeCaptions(mode) {
     setCaptionsMode(mode);
-    const url = mess.fileurl(youtubeID, mode, mess.FILE_CAPTIONS);
+    const url = await mess.fileurl(youtubeID, mode, mess.FILE_CAPTIONS);
     setCaptionURL(url);
   }
 
@@ -66,9 +66,9 @@ export default function WatchPage() {
         debug("start generate");
         await mess.generate(youtubeID);
         debug("end generate");
-        setInfo(mess.info(youtubeID));
-        changeVideo(defaultVideo);
-        changeCaptions(defaultCaptions);
+        setInfo(await mess.info(youtubeID));
+        await changeVideo(defaultVideo);
+        await changeCaptions(defaultCaptions);
         setProgress(false);
         window.scrollTo({ top: 0, behavior: "smooth" });
       } catch (error) {

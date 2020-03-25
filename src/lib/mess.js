@@ -44,18 +44,23 @@ const ROOT = join(homedir, ".youka", "youtube");
 const BINARIES_PATH = join(homedir, ".youka", "binaries");
 const FFMPEG_PATH = join(BINARIES_PATH, "ffmpeg");
 
-function info(youtubeID) {
-  const fpath = join(ROOT, youtubeID, "info.json");
-  if (!fs.existsSync(fpath)) {
-    return;
+async function info(youtubeID) {
+  try {
+    const fpath = join(ROOT, youtubeID, "info.json");
+    const content = await fs.promises.readFile(fpath, "utf-8");
+    return JSON.parse(content);
+  } catch (e) {
+    return null;
   }
-  return JSON.parse(fs.readFileSync(fpath, "utf-8"));
 }
 
-function fileurl(youtubeID, mode, file) {
-  const fpath = filepath(youtubeID, mode, file);
-  if (fs.existsSync(fpath)) {
+async function fileurl(youtubeID, mode, file) {
+  try {
+    const fpath = filepath(youtubeID, mode, file);
+    await fs.promises.stat(fpath);
     return `file://${fpath}`;
+  } catch (e) {
+    return null;
   }
 }
 
@@ -66,11 +71,17 @@ function filepath(youtubeID, mode, file) {
 async function generate(youtubeID) {
   debug("youtube-id", youtubeID);
 
-  if (fs.existsSync(filepath(youtubeID, MODE_MEDIA_INSTRUMENTS, FILE_VIDEO))) {
+  try {
+    await fs.promises.stat(
+      filepath(youtubeID, MODE_MEDIA_INSTRUMENTS, FILE_VIDEO)
+    );
+    debug("video already exists");
     return;
+  } catch (e) {
+    debug("can't find video locally");
   }
 
-  if (!ffmpegExists()) {
+  if (!(await ffmpegExists())) {
     await downloadFfpmeg();
   }
 
@@ -81,14 +92,14 @@ async function generate(youtubeID) {
 
   debug("download video");
   const videoOriginal = await youtube.download(youtubeID);
-  fs.writeFileSync(
+  await fs.promises.writeFile(
     filepath(youtubeID, MODE_MEDIA_ORIGINAL, FILE_VIDEO),
     videoOriginal
   );
 
   debug("find lyrics");
   const info = await youtube.info(youtubeID);
-  fs.writeFileSync(
+  await fs.promises.writeFile(
     filepath(youtubeID, MODE_INFO, FILE_JSON),
     JSON.stringify(info, null, 2),
     "utf-8"
@@ -113,7 +124,7 @@ async function generate(youtubeID) {
   );
   fd.append("audio", audioBlob);
   if (lyrics) {
-    fs.writeFileSync(
+    await fs.promises.writeFile(
       filepath(youtubeID, MODE_LYRICS, FILE_TEXT),
       lyrics,
       "utf-8"
@@ -131,13 +142,13 @@ async function generate(youtubeID) {
   if (audio) {
     for (const [mode, value] of Object.entries(audio)) {
       const fpath = filepath(youtubeID, mode, FILE_AUDIO);
-      fs.writeFileSync(fpath, value, "base64");
+      await fs.promises.writeFile(fpath, value, "base64");
     }
   }
   if (captions) {
     for (const [mode, value] of Object.entries(captions)) {
       const fpath = filepath(youtubeID, mode, FILE_CAPTIONS);
-      fs.writeFileSync(fpath, value, "base64");
+      await fs.promises.writeFile(fpath, value, "base64");
     }
   }
 
@@ -157,8 +168,13 @@ async function generate(youtubeID) {
   }
 }
 
-function ffmpegExists() {
-  return fs.existsSync(FFMPEG_PATH);
+async function ffmpegExists() {
+  try {
+    await fs.promises.stat(FFMPEG_PATH);
+    return true;
+  } catch (e) {
+    return false;
+  }
 }
 
 async function downloadFfpmeg() {
@@ -175,9 +191,9 @@ async function downloadFfpmeg() {
   });
 }
 
-function library() {
-  const ids = fs
-    .readdirSync(ROOT, { withFileTypes: true })
+async function library() {
+  const files = await fs.promises.readdir(ROOT, { withFileTypes: true });
+  const ids = files
     .filter((dirent) => dirent.isDirectory())
     .map((dirent) => dirent.name);
 

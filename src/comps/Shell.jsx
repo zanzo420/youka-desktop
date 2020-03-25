@@ -82,11 +82,12 @@ export default function Shell({ children, youtubeID, defaultPlaylist }) {
     }
   }
 
-  function handleLibrary() {
+  async function handleLibrary() {
     try {
       setLoading(true);
       setPlaylist(PLAYLIST_LIBRARY);
-      setVideos(mess.library());
+      const libraryVideos = await mess.library();
+      setVideos(libraryVideos);
     } catch (error) {
       console.error(error);
       setVideos([]);
