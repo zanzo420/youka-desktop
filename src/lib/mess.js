@@ -1,13 +1,13 @@
-const debug = require("debug")("youka:mess");
-const ffmpeg = require("fluent-ffmpeg");
-const ffbinaries = require("ffbinaries");
-const streamToBlob = require("stream-to-blob");
-const youtube = require("@youka/youtube");
-const lyricsFinder = require("@youka/lyrics");
 const fs = require("fs");
 const join = require("path").join;
 const homedir = require("os").homedir();
+const debug = require("debug")("youka:mess");
+const ffmpeg = require("fluent-ffmpeg");
+const ffbinaries = require("ffbinaries");
+const youtube = require("@youka/youtube");
+const lyricsFinder = require("@youka/lyrics");
 const mkdirp = require("mkdirp");
+const needle = require("needle");
 
 const FILE_VIDEO = ".mp4";
 const FILE_AUDIO = ".m4a";
@@ -31,13 +31,13 @@ const CAPTIONS_MODES = [
   MODE_CAPTIONS_LINE,
   MODE_CAPTIONS_WORD,
   MODE_CAPTIONS_ALL,
-  MODE_CAPTIONS_OFF,
+  MODE_CAPTIONS_OFF
 ];
 
 const MEDIA_MODES = [
   MODE_MEDIA_ORIGINAL,
   MODE_MEDIA_INSTRUMENTS,
-  MODE_MEDIA_VOCALS,
+  MODE_MEDIA_VOCALS
 ];
 
 const ROOT = join(homedir, ".youka", "youtube");
@@ -55,13 +55,11 @@ async function info(youtubeID) {
 }
 
 async function fileurl(youtubeID, mode, file) {
-  try {
-    const fpath = filepath(youtubeID, mode, file);
-    await fs.promises.stat(fpath);
+  const fpath = filepath(youtubeID, mode, file);
+  if (await exists(fpath)) {
     return `file://${fpath}`;
-  } catch (e) {
-    return null;
   }
+  return null;
 }
 
 function filepath(youtubeID, mode, file) {
@@ -71,17 +69,15 @@ function filepath(youtubeID, mode, file) {
 async function generate(youtubeID) {
   debug("youtube-id", youtubeID);
 
-  try {
-    await fs.promises.stat(
-      filepath(youtubeID, MODE_MEDIA_INSTRUMENTS, FILE_VIDEO)
-    );
+  if (await exists(filepath(youtubeID, MODE_MEDIA_INSTRUMENTS, FILE_VIDEO))) {
     debug("video already exists");
     return;
-  } catch (e) {
-    debug("can't find video locally");
   }
 
+  debug("can't find video locally");
+
   if (!(await ffmpegExists())) {
+    debug("download ffmpeg");
     await downloadFfpmeg();
   }
 
@@ -91,11 +87,15 @@ async function generate(youtubeID) {
   await mkdirp(join(ROOT, youtubeID));
 
   debug("download video");
-  const videoOriginal = await youtube.download(youtubeID);
-  await fs.promises.writeFile(
-    filepath(youtubeID, MODE_MEDIA_ORIGINAL, FILE_VIDEO),
-    videoOriginal
+  const originalVideoFilepath = filepath(
+    youtubeID,
+    MODE_MEDIA_ORIGINAL,
+    FILE_VIDEO
   );
+  if (!(await exists(originalVideoFilepath))) {
+    const videoOriginal = await youtube.download(youtubeID);
+    await fs.promises.writeFile(originalVideoFilepath, videoOriginal);
+  }
 
   debug("find lyrics");
   const info = await youtube.info(youtubeID);
@@ -110,35 +110,49 @@ async function generate(youtubeID) {
   debug("seperate audio");
   await new Promise((resolve, reject) => {
     ffmpeg(filepath(youtubeID, MODE_MEDIA_ORIGINAL, FILE_VIDEO))
-      .on("error", (error) => reject(error))
+      .on("error", error => reject(error))
       .on("end", () => resolve())
       .addOptions(["-map 0:a", "-c copy"])
       .save(filepath(youtubeID, MODE_MEDIA_ORIGINAL, FILE_AUDIO));
   });
 
   debug("split and align");
-  const url = "https://api.audioai.online/split-align";
-  const fd = new window.FormData();
-  const audioBlob = await streamToBlob(
-    fs.createReadStream(filepath(youtubeID, MODE_MEDIA_ORIGINAL, FILE_AUDIO))
+  const audioBuffer = await fs.promises.readFile(
+    filepath(youtubeID, MODE_MEDIA_ORIGINAL, FILE_AUDIO)
   );
-  fd.append("audio", audioBlob);
+  let data = {
+    audio: {
+      buffer: audioBuffer,
+      filename: "audio",
+      content_type: "application/octet-stream"
+    }
+  };
   if (lyrics) {
     await fs.promises.writeFile(
       filepath(youtubeID, MODE_LYRICS, FILE_TEXT),
       lyrics,
       "utf-8"
     );
-    const transcriptBlob = await streamToBlob(
-      fs.createReadStream(filepath(youtubeID, MODE_LYRICS, FILE_TEXT))
+    const transcriptBuffer = await fs.promises.readFile(
+      filepath(youtubeID, MODE_LYRICS, FILE_TEXT)
     );
-    fd.append("transcript", transcriptBlob);
+    data.transcript = {
+      buffer: transcriptBuffer,
+      filename: "transcript",
+      content_type: "application/octet-stream"
+    };
   }
-  const response = await window.fetch(url, { method: "post", body: fd });
-  const { audio, captions, message } = await response.json();
-  if (response.status !== 200) {
+  const response = await needle(
+    "post",
+    "https://api.audioai.online/split-align",
+    data,
+    { multipart: true, user_agent: "Youka" }
+  );
+  if (response.statusCode !== 200) {
+    const message = response.body.message || "split failed";
     throw new Error(message);
   }
+  const { audio, captions } = response.body;
   if (audio) {
     for (const [mode, value] of Object.entries(audio)) {
       const fpath = filepath(youtubeID, mode, FILE_AUDIO);
@@ -158,7 +172,7 @@ async function generate(youtubeID) {
     const media = medias[i];
     await new Promise((resolve, reject) => {
       ffmpeg()
-        .on("error", (error) => reject(error))
+        .on("error", error => reject(error))
         .on("end", () => resolve())
         .input(filepath(youtubeID, MODE_MEDIA_ORIGINAL, FILE_VIDEO))
         .input(filepath(youtubeID, media, FILE_AUDIO))
@@ -169,8 +183,12 @@ async function generate(youtubeID) {
 }
 
 async function ffmpegExists() {
+  return exists(FFMPEG_PATH);
+}
+
+async function exists(filepath) {
   try {
-    await fs.promises.stat(FFMPEG_PATH);
+    await fs.promises.stat(filepath);
     return true;
   } catch (e) {
     return false;
@@ -183,7 +201,7 @@ async function downloadFfpmeg() {
     ffbinaries.downloadBinaries(
       "ffmpeg",
       { destination: BINARIES_PATH },
-      (err) => {
+      err => {
         if (err) return reject(err);
         resolve();
       }
@@ -194,17 +212,17 @@ async function downloadFfpmeg() {
 async function library() {
   const files = await fs.promises.readdir(ROOT, { withFileTypes: true });
   const ids = files
-    .filter((dirent) => dirent.isDirectory())
-    .map((dirent) => dirent.name);
+    .filter(dirent => dirent.isDirectory())
+    .map(dirent => dirent.name);
 
   const items = [];
-  ids.map((id) => {
+  ids.map(id => {
     const i = info(id);
     if (i) {
       items.push({
         id: id,
         image: `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
-        title: i.title,
+        title: i.title
       });
     }
   });
@@ -227,5 +245,5 @@ export {
   MODE_MEDIA_INSTRUMENTS,
   MODE_CAPTIONS_WORD,
   MODE_CAPTIONS_LINE,
-  MODE_CAPTIONS_OFF,
+  MODE_CAPTIONS_OFF
 };

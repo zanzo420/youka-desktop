@@ -19,11 +19,6 @@
   "config": {
     "forge": "./forge.config.js"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "pretty-quick --staged"
-    }
-  },
   "devDependencies": {
     "@babel/core": "^7.8.6",
     "@babel/plugin-transform-runtime": "^7.8.3",
@@ -56,22 +51,19 @@
     "file-loader": "^5.1.0",
     "fluent-ffmpeg": "^2.1.2",
     "fork-ts-checker-webpack-plugin": "^3.1.1",
-    "husky": "^4.2.3",
     "lodash": "^4.17.15",
     "minimist": ">=1.2.2",
     "mkdirp": "^1.0.3",
+    "needle": "^2.3.3",
     "node-loader": "^0.6.0",
     "plyr": "^3.5.10",
     "prettier": "^2.0.1",
-    "pretty-quick": "^2.0.1",
     "react": "^16.12.0",
     "react-dom": "^16.12.0",
     "react-hot-loader": "^4.12.19",
     "react-router-dom": "^5.1.2",
-    "request": "^2.88.2",
     "semantic-ui-css": "^2.4.1",
     "semantic-ui-react": "^0.88.2",
-    "stream-to-blob": "^2.0.0",
     "style-loader": "^0.23.1",
     "tailwindcss": "^1.2.0",
     "universal-analytics": "^0.4.20",
@@ -80,5 +72,5 @@
     "uuid": "^7.0.2",
     "webpack": "^4.42.0"
   },
-  "license": "MIT"
+  "license": "GPL-3.0+"
 }
