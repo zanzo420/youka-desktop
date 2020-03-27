@@ -6,6 +6,10 @@ a:hover {
   color: white;
 }
 
+.plyr--video {
+  max-height: 60vh;
+}
+
 .plyr__caption {
   font-size: 2rem;
 }
