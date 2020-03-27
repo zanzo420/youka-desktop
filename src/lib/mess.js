@@ -216,16 +216,17 @@ async function library() {
     .map(dirent => dirent.name);
 
   const items = [];
-  ids.map(id => {
-    const i = info(id);
-    if (i) {
+  for (let i = 0; i < ids.length; i++) {
+    const id = ids[i];
+    const inf = await info(id);
+    if (inf) {
       items.push({
         id: id,
         image: `https://img.youtube.com/vi/${id}/hqdefault.jpg`,
-        title: i.title
+        title: inf.title
       });
     }
-  });
+  }
 
   return items;
 }
