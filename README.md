@@ -7,8 +7,8 @@
 - Follow Youka on [Twitter](https://twitter.com/youka_club).
 - Become a [Patreon](https://www.patreon.com/getyouka).
 
-[Watch a Demo](https://www.youtube.com/watch?v=MGjH51vyHEs)
-[![Watch the demo](https://static.youka.club/demo.jpg)](https://www.youtube.com/watch?v=MGjH51vyHEs)
+[Watch a Demo](https://vimeo.com/401471507)
+[![Watch the demo](https://static.youka.club/demo.jpg)](https://vimeo.com/401471507)
 
 ## Getting Started
 
