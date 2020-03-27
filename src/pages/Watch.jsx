@@ -11,7 +11,6 @@ import ReportButton from "../comps/ReportButton";
 import { useEvent } from "../lib/hooks";
 
 const { shell } = require("electron");
-const debug = require("debug")("youka:desktop");
 
 export default function WatchPage() {
   const { youtubeID } = useParams();
@@ -22,8 +21,8 @@ export default function WatchPage() {
   const defaultVideo = mess.MODE_MEDIA_INSTRUMENTS;
   const defaultCaptions = mess.MODE_CAPTIONS_LINE;
 
+  const [videoModes, setVideoModes] = useState({});
   const [videoMode, setVideoMode] = useState(defaultVideo);
-  const [captionsMode, setCaptionsMode] = useState(defaultCaptions);
   const [videoURL, setVideoURL] = useState();
   const [captionsURL, setCaptionURL] = useState();
   const [error, setError] = useState();
@@ -39,22 +38,18 @@ export default function WatchPage() {
     changeVideo(data.value);
   }
 
-  async function changeVideo(mode) {
-    const url = await mess.fileurl(youtubeID, mode, mess.FILE_VIDEO);
+  function changeVideo(mode, modes) {
+    const m = modes || videoModes;
+    const url = m[mode];
     if (url) {
       setVideoMode(mode);
       setVideoURL(url);
     }
   }
 
-  async function changeCaptions(mode) {
-    setCaptionsMode(mode);
-    const url = await mess.fileurl(youtubeID, mode, mess.FILE_CAPTIONS);
+  function changeCaptions(mode, modes) {
+    const url = modes[mode];
     setCaptionURL(url);
-  }
-
-  function handleChangeCaptions(e, data) {
-    changeCaptions(data.value);
   }
 
   useEffect(() => {
@@ -63,12 +58,11 @@ export default function WatchPage() {
         window.scrollTo({ top: 0, behavior: "smooth" });
         setError(null);
         setProgress(true);
-        debug("start generate");
-        await mess.generate(youtubeID);
-        debug("end generate");
+        const files = await mess.files(youtubeID);
+        setVideoModes(files.videos);
         setInfo(await mess.info(youtubeID));
-        await changeVideo(defaultVideo);
-        await changeCaptions(defaultCaptions);
+        changeVideo(defaultVideo, files.videos);
+        changeCaptions(defaultCaptions, files.captions);
         setProgress(false);
         window.scrollTo({ top: 0, behavior: "smooth" });
       } catch (error) {
@@ -129,21 +123,11 @@ export default function WatchPage() {
             </div>
             <div className="flex flex-row w-full m-2 justify-center">
               <div className="flex flex-row p-2 mx-4">
-                <div className="font-bold self-center">VIDEO</div>
                 <Radio
                   name="video"
                   checked={videoMode}
-                  values={mess.MEDIA_MODES}
+                  values={Object.keys(videoModes)}
                   onChange={handleChangeVideo}
-                />
-              </div>
-              <div className="flex flex-row p-2 mx-4">
-                <div className="font-bold self-center">CAPTIONS</div>
-                <Radio
-                  name="captions"
-                  checked={captionsMode}
-                  values={mess.CAPTIONS_MODES}
-                  onChange={handleChangeCaptions}
                 />
               </div>
             </div>

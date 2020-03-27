@@ -14,8 +14,8 @@ export default function Player({ youtubeID, videoURL, captionsURL }) {
       controls: ["play-large", "play", "progress", "volume", "fullscreen"],
       captions: {
         active: true,
-        language: "en",
-      },
+        language: "en"
+      }
     };
     playerRef.current = new Plyr("#player", plyrOptions);
   }, []);
@@ -38,9 +38,12 @@ export default function Player({ youtubeID, videoURL, captionsURL }) {
     if (captionsURL) {
       captionsRef.current.setAttribute("src", captionsURL);
     } else {
-      const blob = new Blob(["WEBVTT\n\n00:00:00.000 --> 01:00:00.000"], {
-        type: "text/vtt",
-      });
+      const blob = new Blob(
+        ["WEBVTT\n\n00:00:00.000 --> 01:00:00.000\nLyrics not found\n"],
+        {
+          type: "text/vtt"
+        }
+      );
       const url = URL.createObjectURL(blob);
       captionsRef.current.setAttribute("src", url);
     }

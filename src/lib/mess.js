@@ -21,18 +21,11 @@ const MODE_MEDIA_VOCALS = "vocals";
 
 const MODE_CAPTIONS_LINE = "line";
 const MODE_CAPTIONS_WORD = "word";
-const MODE_CAPTIONS_ALL = "all";
-const MODE_CAPTIONS_OFF = "off";
 
 const MODE_LYRICS = "lyrics";
 const MODE_INFO = "info";
 
-const CAPTIONS_MODES = [
-  MODE_CAPTIONS_LINE,
-  MODE_CAPTIONS_WORD,
-  MODE_CAPTIONS_ALL,
-  MODE_CAPTIONS_OFF
-];
+const CAPTIONS_MODES = [MODE_CAPTIONS_LINE];
 
 const MEDIA_MODES = [
   MODE_MEDIA_ORIGINAL,
@@ -54,16 +47,42 @@ async function info(youtubeID) {
   }
 }
 
-async function fileurl(youtubeID, mode, file) {
+function fileurl(youtubeID, mode, file) {
   const fpath = filepath(youtubeID, mode, file);
-  if (await exists(fpath)) {
-    return `file://${fpath}`;
-  }
-  return null;
+  return `file://${fpath}`;
 }
 
 function filepath(youtubeID, mode, file) {
   return join(ROOT, youtubeID, `${mode}${file}`);
+}
+
+async function files(youtubeID) {
+  const fpath = filepath(youtubeID, MODE_MEDIA_INSTRUMENTS, FILE_VIDEO);
+  if (!(await exists(fpath))) {
+    await generate(youtubeID);
+  }
+
+  let videos = {};
+  let captions = {};
+  const files = await fs.promises.readdir(join(ROOT, youtubeID));
+  for (const file of files) {
+    const parts = file.split(".");
+    const mode = parts[0];
+    const ext = "." + parts[1];
+
+    switch (ext) {
+      case FILE_VIDEO:
+        videos[mode] = fileurl(youtubeID, mode, FILE_VIDEO);
+        break;
+      case FILE_CAPTIONS:
+        if (mode === MODE_CAPTIONS_LINE) {
+          captions[mode] = fileurl(youtubeID, mode, FILE_CAPTIONS);
+        }
+        break;
+    }
+  }
+
+  return { videos, captions };
 }
 
 async function generate(youtubeID) {
@@ -86,7 +105,7 @@ async function generate(youtubeID) {
 
   await mkdirp(join(ROOT, youtubeID));
 
-  debug("download video");
+  debug("download video start");
   const originalVideoFilepath = filepath(
     youtubeID,
     MODE_MEDIA_ORIGINAL,
@@ -96,8 +115,9 @@ async function generate(youtubeID) {
     const videoOriginal = await youtube.download(youtubeID);
     await fs.promises.writeFile(originalVideoFilepath, videoOriginal);
   }
+  debug("download video end");
 
-  debug("find lyrics");
+  debug("find lyrics start");
   const info = await youtube.info(youtubeID);
   await fs.promises.writeFile(
     filepath(youtubeID, MODE_INFO, FILE_JSON),
@@ -106,8 +126,9 @@ async function generate(youtubeID) {
   );
   const title = youtube.utils.cleanTitle(info.title);
   const lyrics = await lyricsFinder(title);
+  debug("find lyrics end");
 
-  debug("seperate audio");
+  debug("seperate audio end");
   await new Promise((resolve, reject) => {
     ffmpeg(filepath(youtubeID, MODE_MEDIA_ORIGINAL, FILE_VIDEO))
       .on("error", error => reject(error))
@@ -115,8 +136,9 @@ async function generate(youtubeID) {
       .addOptions(["-map 0:a", "-c copy"])
       .save(filepath(youtubeID, MODE_MEDIA_ORIGINAL, FILE_AUDIO));
   });
+  debug("seperate audio start");
 
-  debug("split and align");
+  debug("split-align start");
   const audioBuffer = await fs.promises.readFile(
     filepath(youtubeID, MODE_MEDIA_ORIGINAL, FILE_AUDIO)
   );
@@ -165,8 +187,9 @@ async function generate(youtubeID) {
       await fs.promises.writeFile(fpath, value, "base64");
     }
   }
+  debug("split-align end");
 
-  debug("create videos");
+  debug("create videos start");
   const medias = [MODE_MEDIA_INSTRUMENTS, MODE_MEDIA_VOCALS];
   for (let i = 0; i < medias.length; i++) {
     const media = medias[i];
@@ -180,6 +203,7 @@ async function generate(youtubeID) {
         .save(filepath(youtubeID, media, FILE_VIDEO));
     });
   }
+  debug("create videos end");
 }
 
 async function ffmpegExists() {
@@ -234,17 +258,15 @@ async function library() {
 export {
   info,
   library,
-  fileurl,
   filepath,
   generate,
   ffmpegExists,
   downloadFfpmeg,
+  files,
   MEDIA_MODES,
   CAPTIONS_MODES,
   FILE_VIDEO,
   FILE_CAPTIONS,
   MODE_MEDIA_INSTRUMENTS,
-  MODE_CAPTIONS_WORD,
-  MODE_CAPTIONS_LINE,
-  MODE_CAPTIONS_OFF
+  MODE_CAPTIONS_LINE
 };
