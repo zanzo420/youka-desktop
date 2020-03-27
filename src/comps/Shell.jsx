@@ -6,6 +6,8 @@ import { Input, Loader } from "semantic-ui-react";
 import VideoList from "./VideoList";
 import * as mess from "../lib/mess";
 
+const { shell } = require("electron");
+
 const trending_memoize = memoize(trending);
 const mix_memoize = memoize(mix);
 const search_memoize = memoize(search);
@@ -40,6 +42,10 @@ export default function Shell({ children, youtubeID, defaultPlaylist }) {
         handleLibrary();
         break;
     }
+  }
+
+  function handleClickDonate() {
+    shell.openExternal("https://www.patreon.com/getyouka");
   }
 
   async function handleSearch() {
@@ -110,7 +116,7 @@ export default function Shell({ children, youtubeID, defaultPlaylist }) {
     try {
       setLoading(true);
       const results = await search_memoize(query);
-      const filteredResults = results.filter((r) => !r.hours && r.minutes < 10);
+      const filteredResults = results.filter(r => !r.hours && r.minutes < 10);
       setVideos(filteredResults);
     } catch (error) {
       console.error(error);
@@ -139,7 +145,12 @@ export default function Shell({ children, youtubeID, defaultPlaylist }) {
           onFocus={handleSearchFocus}
           ref={searchRef}
         />
-        <div className="flex-1"></div>
+        <div
+          className="self-center text-white text-right font-bold cursor-pointer flex-1"
+          onClick={handleClickDonate}
+        >
+          Help keep Youka alive
+        </div>
       </div>
       {children}
       <div className="flex flex-row justify-center">
@@ -152,7 +163,7 @@ export default function Shell({ children, youtubeID, defaultPlaylist }) {
         </div>
         <div
           style={{
-            color: playlist === PLAYLIST_TRENDING ? "#E30B17" : "black",
+            color: playlist === PLAYLIST_TRENDING ? "#E30B17" : "black"
           }}
           className="p-4 text-xl cursor-pointer"
           onClick={handleTrending}
