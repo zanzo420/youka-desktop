@@ -117,7 +117,7 @@ export default function WatchPage() {
                   action="report captions"
                   label={youtubeID}
                 >
-                  Report Bad Captions
+                  Report out of sync
                 </ReportButton>
               </div>
             </div>
