@@ -39,7 +39,9 @@ export default function Player({ youtubeID, videoURL, captionsURL }) {
       captionsRef.current.setAttribute("src", captionsURL);
     } else {
       const blob = new Blob(
-        ["WEBVTT\n\n00:00:00.000 --> 01:00:00.000\nLyrics not found\n"],
+        [
+          "WEBVTT\n\n00:00:00.000 --> 01:00:00.000\nsynced lyrics are unavailable\n"
+        ],
         {
           type: "text/vtt"
         }
