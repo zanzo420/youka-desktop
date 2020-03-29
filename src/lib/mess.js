@@ -168,7 +168,7 @@ async function generate(youtubeID) {
     "post",
     "https://api.audioai.online/split-align",
     data,
-    { multipart: true, user_agent: "Youka", compressed: true }
+    { multipart: true, user_agent: "Youka" }
   );
   if (response.statusCode !== 200) {
     const message = response.body.message || "split failed";
