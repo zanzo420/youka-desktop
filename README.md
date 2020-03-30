@@ -5,6 +5,7 @@
 - Read about Youka on [The Verge](https://www.theverge.com/tldr/2020/2/19/21144452/youtube-youka-club-karaoke-lyrics).
 - Visit the project's website at <https://www.youka.club>.
 - Follow Youka on [Twitter](https://twitter.com/youka_club).
+- Join our [Discord](https://discord.gg/yMXv8qw)
 - Become a [Patreon](https://www.patreon.com/getyouka).
 
 [Watch a Demo](https://vimeo.com/401471507)
