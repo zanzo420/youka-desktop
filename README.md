@@ -1,4 +1,4 @@
-<p align="center"><img src="assets/logo.ico" width='80px'/></p>
+<p align="center"><img src="public/logo.ico" width='80px'/></p>
 <h2 align="center"><b>Youka</b></h2>
 <h4 align="center">sing karaoke, any song, any language</h4>
 
