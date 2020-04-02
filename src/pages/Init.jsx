@@ -1,14 +1,11 @@
-import "../lib/sentry";
 import React, { useState, useEffect } from "react";
-import { Message, Icon } from "semantic-ui-react";
+import { Message, Dimmer, Loader } from "semantic-ui-react";
+import { useHistory } from "react-router-dom";
 import { downloadFfpmeg } from "../lib/mess";
 import store from "../lib/store";
 
-export function initialized() {
-  return store.get("initialized") === true;
-}
-
 export default function InitPage() {
+  let history = useHistory();
   const [error, setError] = useState();
 
   useEffect(() => {
@@ -16,12 +13,12 @@ export default function InitPage() {
       try {
         await downloadFfpmeg();
         store.set("initialized", true);
-        window.location.reload();
+        history.push("/");
       } catch (error) {
         setError(error.toString());
       }
     })();
-  }, []);
+  }, [history]);
 
   return error ? (
     <Message negative>
@@ -29,12 +26,8 @@ export default function InitPage() {
       <p>{error}</p>
     </Message>
   ) : (
-    <Message icon>
-      <Icon name="circle notched" loading />
-      <Message.Content>
-        <Message.Header>Initializing</Message.Header>
-        It may take a minute..
-      </Message.Content>
-    </Message>
+    <Dimmer inverted active>
+      <Loader>Initializing. It may take a minute..</Loader>
+    </Dimmer>
   );
 }

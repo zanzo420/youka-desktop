@@ -20,7 +20,7 @@ const MODE_MEDIA_INSTRUMENTS = "instruments";
 const MODE_MEDIA_VOCALS = "vocals";
 
 const MODE_CAPTIONS_LINE = "line";
-const MODE_CAPTIONS_WORD = "word";
+// const MODE_CAPTIONS_WORD = "word";
 
 const MODE_LYRICS = "lyrics";
 const MODE_INFO = "info";
@@ -78,6 +78,8 @@ async function files(youtubeID) {
         if (mode === MODE_CAPTIONS_LINE) {
           captions[mode] = fileurl(youtubeID, mode, FILE_CAPTIONS);
         }
+        break;
+      default:
         break;
     }
   }

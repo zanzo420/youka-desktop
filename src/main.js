@@ -1,5 +1,5 @@
-import { app, BrowserWindow } from "electron";
-import "./lib/sentry-main";
+const os = require("os");
+const { app, BrowserWindow } = require("electron");
 const autoUpdate = require("update-electron-app");
 
 app.allowRendererProcessReuse = false;
@@ -7,14 +7,11 @@ process.env.ELECTRON_DISABLE_SECURITY_WARNINGS = "1";
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require("electron-squirrel-startup")) {
-  // eslint-disable-line global-require
   app.quit();
 }
 
-try {
+if (os.platform() === "win32") {
   autoUpdate();
-} catch (error) {
-  console.log(error);
 }
 
 app.commandLine.appendSwitch("autoplay-policy", "no-user-gesture-required");
@@ -25,18 +22,14 @@ const createWindow = () => {
     show: false,
     webPreferences: {
       webSecurity: false,
-      nodeIntegration: true,
-    },
+      nodeIntegration: true
+    }
   });
   mainWindow.maximize();
   mainWindow.show();
 
-  // and load the index.html of the app.
-  // eslint-disable-next-line
-  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-
-  // Open the DevTools.
-  // mainWindow.webContents.openDevTools();
+  const url = process.env.YOUKA_APP_URL || "https://app.youka.club/";
+  mainWindow.loadURL(url);
 };
 
 // This method will be called when Electron has finished
@@ -60,6 +53,3 @@ app.on("activate", () => {
     createWindow();
   }
 });
-
-// In this file you can include the rest of your app"s specific main process
-// code. You can also put them in separate files and import them here.

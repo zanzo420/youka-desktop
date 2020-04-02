@@ -3,8 +3,6 @@ import Plyr from "plyr";
 import "plyr/dist/plyr.css";
 
 export default function Player({ youtubeID, videoURL, captionsURL }) {
-  if (!videoURL) return null;
-
   const playerRef = useRef();
   const videoRef = useRef();
   const captionsRef = useRef();
@@ -21,7 +19,7 @@ export default function Player({ youtubeID, videoURL, captionsURL }) {
   }, []);
 
   useEffect(() => {
-    (async function () {
+    (async function() {
       if (!videoURL) return;
       const currVideoURL = videoRef.current.getAttribute("src");
       const isSame = currVideoURL && currVideoURL.includes(youtubeID);
@@ -32,7 +30,7 @@ export default function Player({ youtubeID, videoURL, captionsURL }) {
         playerRef.current.currentTime = currentTime;
       }
     })();
-  }, [videoURL]);
+  }, [videoURL, youtubeID]);
 
   useEffect(() => {
     if (captionsURL) {
@@ -50,6 +48,8 @@ export default function Player({ youtubeID, videoURL, captionsURL }) {
       captionsRef.current.setAttribute("src", url);
     }
   }, [captionsURL]);
+
+  if (!videoURL) return null;
 
   return (
     <video

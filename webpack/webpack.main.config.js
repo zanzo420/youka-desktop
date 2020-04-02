@@ -8,9 +8,9 @@ module.exports = {
   entry: "./src/main.js",
   // Put your normal webpack config below here
   module: {
-    rules,
+    rules
   },
   resolve: {
-    extensions: [".js", ".jsx", ".css", ".json"],
-  },
+    extensions: [".js"]
+  }
 };

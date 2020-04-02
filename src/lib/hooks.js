@@ -12,7 +12,7 @@ export const visitor = ua(config.ua, user);
 store.set("user", user);
 
 export function useScreenView(screenName) {
-  if (!stats) return;
+  // if (!stats) return;
 
   useEffect(() => {
     visitor.screenview(screenName, "Youka", version).send();
@@ -20,7 +20,7 @@ export function useScreenView(screenName) {
 }
 
 export function useEvent(category, action, label) {
-  if (!stats) return;
+  // if (!stats) return;
 
   useEffect(() => {
     visitor.event(category, action, label).send();

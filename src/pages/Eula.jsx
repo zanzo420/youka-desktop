@@ -1,20 +1,18 @@
 import React, { useState } from "react";
 import { Button } from "semantic-ui-react";
+import { useHistory } from "react-router-dom";
 import store from "../lib/store";
 
 const remote = require("electron").remote;
 
-export function accepted() {
-  return store.get("eula") === true;
-}
-
 export default function EulaPage() {
+  let history = useHistory();
   const [stats, setStats] = useState(true);
 
   function handleAccept() {
     store.set("eula", true);
     store.set("stats", stats);
-    window.location.reload();
+    history.push("/");
   }
 
   function handleDecline() {

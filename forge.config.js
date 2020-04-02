@@ -4,49 +4,45 @@ const { version } = packageJson;
 const config = {
   packagerConfig: {
     executableName: "youka",
-    icon: "assets/logo.icns",
-    ignore: (file) => {
-      if (!file) return false;
-      return !/^[/\\]\.webpack($|[/\\]).*$/.test(file);
-    },
+    icon: "public/logo.icns"
   },
   makers: [
     {
       name: "@electron-forge/maker-squirrel",
       platforms: ["win32"],
-      config: (arch) => {
+      config: arch => {
         return {
           name: "youka",
           exe: "youka.exe",
           setupExe: `youka-win32-${arch}-${version}-setup.exe`,
-          setupIcon: "assets/logo.ico",
+          setupIcon: "public/logo.ico"
         };
-      },
+      }
     },
     {
       name: "@electron-forge/maker-dmg",
       platforms: ["darwin"],
       config: {
         name: `youka-${version}`,
-        icon: "assets/logo.icns",
-      },
+        icon: "public/logo.icns"
+      }
     },
     {
       name: "@electron-forge/maker-deb",
       platforms: ["linux"],
       config: {
         name: "youka",
-        icon: "assets/logo.svg",
-      },
+        icon: "public/logo.svg"
+      }
     },
     {
       name: "@electron-forge/maker-rpm",
       platforms: ["linux"],
       config: {
         name: "youka",
-        icon: "assets/logo.svg",
-      },
-    },
+        icon: "public/logo.svg"
+      }
+    }
   ],
   publishers: [
     {
@@ -54,11 +50,11 @@ const config = {
       config: {
         repository: {
           owner: "youkaclub",
-          name: "youka-desktop",
+          name: "youka-desktop"
         },
-        draft: true,
-      },
-    },
+        draft: true
+      }
+    }
   ],
   plugins: [
     [
@@ -69,15 +65,15 @@ const config = {
           config: "./webpack/webpack.renderer.config.js",
           entryPoints: [
             {
-              html: "./src/index.html",
-              js: "./src/index.jsx",
-              name: "main_window",
-            },
-          ],
-        },
-      },
-    ],
-  ],
+              html: "./public/index.html",
+              js: "./webpack/index.js",
+              name: "main_window"
+            }
+          ]
+        }
+      }
+    ]
+  ]
 };
 
 module.exports = config;

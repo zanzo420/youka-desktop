@@ -25,7 +25,8 @@ export default function Shell({ children, youtubeID, defaultPlaylist }) {
 
   useEffect(() => {
     handlePlaylistChange(defaultPlaylist);
-  }, [defaultPlaylist, youtubeID]);
+    // eslint-disable-next-line
+  }, []);
 
   function handlePlaylistChange(pl) {
     switch (pl) {
@@ -40,6 +41,8 @@ export default function Shell({ children, youtubeID, defaultPlaylist }) {
         break;
       case PLAYLIST_LIBRARY:
         handleLibrary();
+        break;
+      default:
         break;
     }
   }

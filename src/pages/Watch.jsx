@@ -1,4 +1,3 @@
-import "../lib/sentry";
 import React, { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { Message, Icon, Button } from "semantic-ui-react";
@@ -14,8 +13,6 @@ const { shell } = require("electron");
 
 export default function WatchPage() {
   const { youtubeID } = useParams();
-  if (!youtubeID) return null;
-
   useEvent("Watch", "Click", youtubeID);
 
   const defaultVideo = mess.MODE_MEDIA_INSTRUMENTS;
@@ -53,7 +50,7 @@ export default function WatchPage() {
   }
 
   useEffect(() => {
-    (async function () {
+    (async function() {
       try {
         window.scrollTo({ top: 0, behavior: "smooth" });
         setError(null);
@@ -61,7 +58,8 @@ export default function WatchPage() {
         const files = await mess.files(youtubeID);
         setVideoModes(files.videos);
         setInfo(await mess.info(youtubeID));
-        changeVideo(defaultVideo, files.videos);
+        setVideoMode(defaultVideo);
+        setVideoURL(files.videos[defaultVideo]);
         changeCaptions(defaultCaptions, files.captions);
         setProgress(false);
         window.scrollTo({ top: 0, behavior: "smooth" });
@@ -70,7 +68,9 @@ export default function WatchPage() {
         setProgress(false);
       }
     })();
-  }, [youtubeID]);
+  }, [youtubeID, defaultVideo, defaultCaptions]);
+
+  if (!youtubeID) return null;
 
   return (
     <Shell youtubeID={youtubeID} defaultPlaylist={PLAYLIST_MIX}>
