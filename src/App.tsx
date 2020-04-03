@@ -4,6 +4,7 @@ import Fallback from "./comps/Fallback";
 import store from "./lib/store";
 import "semantic-ui-css/semantic.min.css";
 import "tailwindcss/dist/tailwind.min.css";
+import "./lib/rollbar"
 import "./index.css";
 
 const Home = React.lazy(() => import("./pages/Home"));
@@ -11,7 +12,7 @@ const Watch = React.lazy(() => import("./pages/Watch"));
 const Eula = React.lazy(() => import("./pages/Eula"));
 const Init = React.lazy(() => import("./pages/Init"));
 
-function App() {
+function App() {  
   return (
     <Router>
       <Suspense fallback={<Fallback />}>

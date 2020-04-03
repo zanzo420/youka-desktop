@@ -25,6 +25,7 @@ const createWindow = () => {
       nodeIntegration: true
     }
   });
+  mainWindow.removeMenu();
   mainWindow.maximize();
   mainWindow.show();
 
