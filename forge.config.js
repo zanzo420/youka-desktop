@@ -4,7 +4,11 @@ const { version } = packageJson;
 const config = {
   packagerConfig: {
     executableName: "youka",
-    icon: "public/logo.icns"
+    icon: "public/logo.icns",
+    ignore: (file) => {
+      if (!file) return false;
+      return !/^[/\\]\.webpack($|[/\\]).*$/.test(file)
+    }
   },
   makers: [
     {
